@@ -1,0 +1,9 @@
+v 0.2
+d 'mepi':  Malmquist Energy Productivity Index in Stata
+d 
+d Distribution-Date:   20191214
+d 
+F mepi.ado
+F mepi.sthlp
+F sdf_i.mo
+F sdf_e.mo
