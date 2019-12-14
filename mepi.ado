@@ -264,11 +264,14 @@ program define mepi,rclass prop(xt)
 			if "`fillmissing'"!=""{
 			
 				
-			    disp  _n(2) as red "Note: Some missing values of TECCH is filled by D^{t}(t)/D^{t+1}(t)"
+			    disp  _n(2) as red "Note: Some missing values of TECCH are filled by D^{t}(t)/D^{t+1}(t)"
 				
 				
 				qui gen _missing=missing(TECCH)
 				replace TECCH=`DD'[_n-1]/`D21'[_n-1] if missing(TECCH)
+				//replace TECCH=`D12'/`DD' if missing(TECCH)
+				//gen D21=`D21'
+				//gen D12=`D12'
 				local missing _missing
 			}
 			
@@ -293,7 +296,7 @@ program define mepi,rclass prop(xt)
 			    
 		order Row  `id' Pdwise  `resvars' 
 		qui keep if !missing(Pdwise) & `touse'
-		qui keep  Row `id' Pdwise  `resvars' `missing'
+		qui keep  Row `id' Pdwise  `resvars' `missing' 
 	
 		disp _n(2) as yellow " Malmquist Energy Productivity Index Results:"
 		disp "    (Row: Row # in the original data; Pdwise: periodwise)"
