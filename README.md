@@ -7,5 +7,5 @@ Malmquist Energy Productivity Index in Stata
 ## Install with Stata Command
  
  ```
- net install gtfpch, from("https://raw.githubusercontent.com/kerrydu/mepi/master/")
+ net install mepi, from("https://raw.githubusercontent.com/kerrydu/mepi/master/")
  ```
