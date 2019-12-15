@@ -49,7 +49,7 @@ A panel variable and a time variable must be specified; use {helpb xtset}.
 {title:Description}
 
 {pstd}
-{cmd:mepi} selects the input and output variables in the opened data set and estimate Malmquist Energy Productivity Index using Data Envelopment Analysis(DEA) frontier by options specified. 
+{cmd:mepi} selects the input and output variables in the opened data set and estimate Malmquist Energy Productivity Index using Data Envelopment Analysis(DEA) frontier by options specified. Technical details can be found in Li et al. (2019)
 
 
 
