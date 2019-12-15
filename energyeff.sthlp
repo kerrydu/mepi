@@ -57,7 +57,7 @@ time() should be specified when sequential or window() is used.
 
 {title:Examples}
 
-{phang}{cmd:. use "https://raw.githubusercontent.com/kerrydu/energyeff/master/exdata.dta"}
+{phang}{cmd:. use "https://raw.githubusercontent.com/kerrydu/mepi/master/exdata.dta"}
 
 {phang}{cmd:. energyeff (E) K L= Y, dmu(dmu) global}
 
