@@ -264,12 +264,12 @@ program define mepi,rclass prop(xt)
 			if "`fillmissing'"!=""{
 			
 				
-			    disp  _n(2) as red "Note: Some missing values of TECCH are filled by D^{t}(t)/D^{t+1}(t)"
+			    disp  _n(2) as red "Note: Some missing values of TECCH are filled by D^{t}(t)/D^{t+1}(t) or  D^{t}(t+1)/D^{t+1}(t+1)."
 				
 				
 				qui gen _missing=missing(TECCH)
 				replace TECCH=`DD'[_n-1]/`D21'[_n-1] if missing(TECCH)
-				//replace TECCH=`D12'/`DD' if missing(TECCH)
+				replace TECCH=`D12'/`DD' if missing(TECCH)
 				//gen D21=`D21'
 				//gen D12=`D12'
 				local missing _missing

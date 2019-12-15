@@ -29,7 +29,7 @@
 {synopt:{opt global}}specifies global production technology.
 {p_end}
 
-{synopt:{cmdab:fill:missing}}specifies filling TECCH with the ratio of D^{t}(t)/D^{t+1}(t) when TECCH is missing due to the infeasible problem of D^{t}(t+1).
+{synopt:{cmdab:fill:missing}}specifies filling TECCH with the ratio of D^{t}(t)/D^{t+1}(t) (or D^{t}(t+1)/D^{t+1}(t+1)) when TECCH is missing due to the infeasible problem of D^{t}(t+1) (or D^{t+1}(t)).
 {p_end}
 
 {synopt:{opt sav:ing(filename[,replace])}}specifies that the results be saved in {it:filename}.dta. 
