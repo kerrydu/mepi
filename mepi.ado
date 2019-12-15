@@ -58,6 +58,24 @@ program define mepi,rclass prop(xt)
 	preserve
 	marksample touse 
     local opvars `varlist'
+	
+	confirm numeric var `invars' `opvars' 
+	
+	local comvars: list invars & opvars 
+	if !(`"`comvars'"'==""){
+		disp as error "`comvars' should not be specified as input and output simultaneously."
+		error 498
+	}
+	
+	local comvars: list inv1 & inv2
+	if !(`"`comvars'"'==""){
+		disp as error "`comvars' should not be specified as energy input and non-energy input simultaneously."
+		error 498
+	}	
+	
+	
+	
+	
 	qui keep `invars' `opvars' `id' `time' `touse' `dmu'
 	qui gen Row=_n
 	label var Row "Row # in the original dataset"
@@ -366,7 +384,7 @@ program define specisdf
 	
 	local inv1: list uniq inv1
 	local inv2: list uniq inv2
-	local inv2: list inv2 - inv1 
+	*local inv2: list inv2 - inv1 
 	
 	local num1: word count `inv1'
 	local num2: word count `inv2'
