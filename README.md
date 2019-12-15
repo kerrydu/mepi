@@ -1,5 +1,5 @@
 # mepi
-Malmquist Energy Productivity Index in Stata
+Energy efficiency index and Malmquist Energy Productivity Index in Stata
 
 ## Requirement
  * Stata 16 or later version
