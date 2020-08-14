@@ -166,7 +166,7 @@ program define energyeff,rclass
 	qui gen `flag'=.
 
 	if "`techtype'"=="global"{
-		specisdf (`inv1') `inv2' = `opvars', gen(effscore) `vrs' maxiter(`maxiter') tol(`tol')
+		specisdf (`inv1') `inv2' = `opvars' if `touse', gen(effscore) `vrs' maxiter(`maxiter') tol(`tol')
 	}
 	
 	if "`techtype'"=="window"{
@@ -186,7 +186,7 @@ program define energyeff,rclass
 		qui gen effscore=.
 		forv t=1/`tmax'{
 			cap drop `temeff'
-			qui replace `flag'=(`period' `relfag' `t') 
+			qui replace `flag'=(`tvar' `techflag' `t') 
 			specisdf (`inv1') `inv2' = `opvars' if `tvar'==`t' & `touse', gen(`temeff') `vrs' maxiter(`maxiter') tol(`tol') rflag(`flag')
 			qui replace effscore=`temeff' if `tvar'==`t' & `touse'
 		}

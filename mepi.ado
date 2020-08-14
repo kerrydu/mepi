@@ -1,3 +1,5 @@
+*! version 0.2
+* fix bugs for dmu opt
 *! version 0.1
 * Kerry Du (kerrydu@xmu.edu.cn)
 * 14 Dec 2019
@@ -46,15 +48,10 @@ program define mepi,rclass prop(xt)
 	local invars `inv1' `inv2'
 *********************************************************************************	
 	
-    syntax varlist [if] [in], [ GLOBAL SEQuential WINdow(numlist intege max=1 >=1) FILLmissing ///
+    syntax varlist [if] [in], [dmu(varname) GLOBAL SEQuential WINdow(numlist intege max=1 >=1) FILLmissing ///
 							   SAVing(string) maxiter(numlist integer >0 max=1) tol(numlist max=1 >0)]
 							   
 							   
-	
-	
-	
-	
-	
 	preserve
 	marksample touse 
     local opvars `varlist'
@@ -133,10 +130,10 @@ program define mepi,rclass prop(xt)
 	}	
 	
    
-    tempvar period dmu
+    tempvar period dmu2
 	
 	qui egen `period'=group(`time')
-	qui egen `dmu'=group(`id')	
+	qui egen `dmu2'=group(`id')	
 
 	
     qui su  `period'
@@ -150,7 +147,7 @@ program define mepi,rclass prop(xt)
 	
     qui gen `flag'=0
 	
-	sort `period' `dmu'
+	sort `period' `dmu2'
 	
   if `"`techtype'"'=="contemporaneous"{
   
@@ -251,11 +248,11 @@ program define mepi,rclass prop(xt)
 	    qui replace `flag'=1
 		specisdf (`inv1') `inv2' = `opvars' if `touse', rflag(`flag') gen(`temp')  maxiter(`maxiter') tol(`tol')
         
-        qui bys `dmu' (`period'): gen MEPI=`temp'/`temp'[_n-1]	
+        qui bys `dmu2' (`period'): gen MEPI=`temp'/`temp'[_n-1]	
 		label var MEPI "Malmquist Energy Productivity Index"
 		cap drop `temp'		
 		
-		sort `period' `dmu'
+		sort `period' `dmu2'
 		forv t=1/`tmax'{
 			qui replace `flag'=(`period'==`t')
 			specisdf (`inv1') `inv2' = `opvars'  if `touse' & `period'==`t', rflag(`flag') gen(`temp')  maxiter(`maxiter') tol(`tol')
@@ -263,8 +260,8 @@ program define mepi,rclass prop(xt)
 			qui cap drop `temp'
 		}
 		
-		qui bys `dmu' (`period'): gen TECH=`DD'/`DD'[_n-1]	
-		qui bys `dmu' (`period'): gen BPC=MEPI/TECH			
+		qui bys `dmu2' (`period'): gen TECH=`DD'/`DD'[_n-1]	
+		qui bys `dmu2' (`period'): gen BPC=MEPI/TECH			
 	
 		label var TECH  "energy efficiency change"	
 		label var BPC "Best practice gap change"
@@ -276,9 +273,9 @@ program define mepi,rclass prop(xt)
 	
 			//su `DD' `D12' `D21'
 		qui {
-			sort `dmu' `period'
-			bys `dmu' (`period'): gen TECH=`DD'/`DD'[_n-1]
-			bys `dmu' (`period'): gen TECCH=sqrt(`D12'/`DD'*`DD'[_n-1]/`D21'[_n-1])
+			sort `dmu2' `period'
+			bys `dmu2' (`period'): gen TECH=`DD'/`DD'[_n-1]
+			bys `dmu2' (`period'): gen TECCH=sqrt(`D12'/`DD'*`DD'[_n-1]/`D21'[_n-1])
 			if "`fillmissing'"!=""{
 			
 				
@@ -312,9 +309,9 @@ program define mepi,rclass prop(xt)
 		qui cap bys `id' (`time'): gen Pdwise=string(`time'[_n-1])+"~"+string(`time') if _n>1
 		label var Pdwise "Period wise"
 			    
-		order Row  `id' Pdwise  `resvars' 
+		order Row `dmu' `id' Pdwise  `resvars' 
 		qui keep if !missing(Pdwise) & `touse'
-		qui keep  Row `id' Pdwise  `resvars' `missing' 
+		qui keep  Row `dmu' `id' Pdwise  `resvars' `missing' 
 	
 		disp _n(2) as yellow " Malmquist Energy Productivity Index Results:"
 		disp "    (Row: Row # in the original data; Pdwise: periodwise)"
