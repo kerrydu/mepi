@@ -1,0 +1,7 @@
+v 0.2
+d 'getversion':  check the version of the package
+d 
+d Distribution-Date:   20191214
+d 
+F _compile_mata.ado
+F _get_version.ado
